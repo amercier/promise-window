@@ -1,0 +1,6 @@
+{
+  "name": "promise-window",
+  "devDependencies": {
+    "qunit": "~1.17.1"
+  }
+}
