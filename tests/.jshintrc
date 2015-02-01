@@ -1,0 +1,8 @@
+{
+  "extends": "../.jshintrc",
+  "globals": {
+    "PromiseWindow": true,
+    "QUnit": true,
+    "sinon": true
+  }
+}

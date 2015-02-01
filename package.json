@@ -2,16 +2,19 @@
   "private": true,
   "scripts": {
     "clean": "[ ! -e tests/coverage ] || rm -rf tests/coverage",
+    "lint": "jshint --reporter node_modules/jshint-stylish/stylish.js .",
     "list": "find tests -maxdepth 1 -type f -name *.html | while read f; do basename \"$f\" .html; done | sed 's/^test-//'",
     "tdd": "./node_modules/karma/bin/karma start",
     "report": "istanbul report && cat tests/coverage/summary.txt && echo",
-    "test": "npm run clean && for suite in $(npm run -s list); do SUITE=$suite CI=true npm run tdd || exit 1; done && npm run report"
+    "test": "npm run lint && npm run clean && for suite in $(npm run -s list); do SUITE=$suite CI=true npm run tdd || exit 1; done && npm run report"
   },
   "devDependencies": {
     "bower": "^1.3.12",
     "codeclimate-test-reporter": "0.0.4",
     "coveralls": "^2.11.2",
     "istanbul": "^0.3.5",
+    "jshint": "^2.6.0",
+    "jshint-stylish": "^1.0.0",
     "karma": "^0.12.31",
     "karma-chrome-launcher": "^0.1.7",
     "karma-coverage": "^0.2.7",
