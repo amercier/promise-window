@@ -11,9 +11,9 @@ module.exports = function(config) {
   config.set({
     frameworks: [ 'qunit', 'sinon' ],
     files: (
-        process.env.SUITE === 'native'
-        ? []
-        : ['tests/config/disable-native-promise.js']
+        process.env.SUITE === 'native' ?
+          [] :
+          ['tests/config/disable-native-promise.js']
       ).concat([
         'tests/config/karma-init.js',
         'bower_components/bind-polyfill/index.js',

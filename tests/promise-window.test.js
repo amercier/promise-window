@@ -4,7 +4,7 @@
   function getRelativeURL(relativeURL) {
     var base = document.querySelector("base");
     return base ? relativeURL.replace(/^\./, base.href) : relativeURL;
-  };
+  }
 
   QUnit.module('open()');
 
@@ -22,7 +22,7 @@
     function _done() {
       window.open = _open;
       done();
-    };
+    }
 
     window.open = function blocked() {
       return null;
@@ -108,7 +108,7 @@
         }, 2000);
 
     promiseWindow.open().then(
-      function(data) {
+      function() {
         clearTimeout(timeout);
         assert.ok(false, 'Promise should not be resolved');
         done();

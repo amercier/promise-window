@@ -85,7 +85,7 @@
     this.config = extend({}, config, this.constructor.defaultConfig);
     this.config.windowName = this.config.windowName || generateUniqueString('promise-window-');
     this._onPostMessage = this._onPostMessage.bind(this);
-  };
+  }
 
   /**
    * Create a Promise provider from a Promise/A+ constructor to be used with
@@ -96,18 +96,18 @@
    *       promiseProvider: PromiseWindow.getAPlusPromiseProvider(MyCustomPromise)
    *     });
    *
-   * @param  {[type]} constructor Promise/A+ contructor
+   * @param  {[type]} CustomPromise Promise/A+ contructor
    * @return {Function} Returns a promise provider
    */
-  PromiseWindow.getAPlusPromiseProvider = function getAPlusPromiseProvider(constructor) {
+  PromiseWindow.getAPlusPromiseProvider = function getAPlusPromiseProvider(CustomPromise) {
     return function promiseProvider() {
       var module = {};
-      module.promise = new constructor(function(resolve, reject) {
+      module.promise = new CustomPromise(function(resolve, reject) {
         module.resolve = resolve;
         module.reject = reject;
       });
       return module;
-    }
+    };
   };
 
   /**
