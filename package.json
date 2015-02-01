@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "list": "find tests -maxdepth 1 -type f -name *.html | xargs basename -s .html | sed 's/^test-//'",
+    "list": "find tests -maxdepth 1 -type f -name *.html | while read f; do basename \"$f\" .html; done | sed 's/^test-//'",
     "tdd": "./node_modules/karma/bin/karma start",
     "test": "for suite in $(npm run -s list); do SUITE=$suite CI=true npm run tdd || exit 1; done"
   },
