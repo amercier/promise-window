@@ -1,0 +1,7 @@
+language: node_js
+sudo: false
+cache:
+  directories:
+    - bower_components
+    - node_modules
+before_script: ./node_modules/.bin/bower install
