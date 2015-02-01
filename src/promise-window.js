@@ -88,6 +88,29 @@
   };
 
   /**
+   * Create a Promise provider from a Promise/A+ constructor to be used with
+   * `config.promiseProvider`.
+   *
+   *     new PromiseWindow(..., {
+   *       ...,
+   *       promiseProvider: PromiseWindow.getAPlusPromiseProvider(MyCustomPromise)
+   *     });
+   *
+   * @param  {[type]} constructor Promise/A+ contructor
+   * @return {Function} Returns a promise provider
+   */
+  PromiseWindow.getAPlusPromiseProvider = function getAPlusPromiseProvider(constructor) {
+    return function promiseProvider() {
+      var module = {};
+      module.promise = new constructor(function(resolve, reject) {
+        module.resolve = resolve;
+        module.reject = reject;
+      });
+      return module;
+    }
+  };
+
+  /**
    * Convenience method for:
    *
    *     new PromiseWindow(url, config).open()
@@ -127,22 +150,11 @@
     windowName: null
   };
 
-  function generatePromiseProvider(PromiseAPlus) {
-    return function promiseProvider() {
-      var module = {};
-      module.promise = new PromiseAPlus(function(resolve, reject) {
-        module.resolve = resolve;
-        module.reject = reject;
-      });
-      return module;
-    }
-  }
-
   if (root.Promise) {
-    PromiseWindow.defaultConfig.promiseProvider = generatePromiseProvider(root.Promise);
+    PromiseWindow.defaultConfig.promiseProvider = PromiseWindow.getAPlusPromiseProvider(root.Promise);
   }
   else if (root.RSVP) {
-    PromiseWindow.defaultConfig.promiseProvider = generatePromiseProvider(root.RSVP.Promise);
+    PromiseWindow.defaultConfig.promiseProvider = PromiseWindow.getAPlusPromiseProvider(root.RSVP.Promise);
   }
   else if (root.jQuery) {
     PromiseWindow.defaultConfig.promiseProvider = function promiseProvider() {
