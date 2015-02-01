@@ -1,13 +1,17 @@
 (function() {
   'use strict';
 
+  function getRelativeURL(relativeURL) {
+    var base = document.querySelector("base");
+    return base ? relativeURL.replace(/^\./, base.href) : relativeURL;
+  };
 
   QUnit.module('open()');
 
   QUnit.test('Rejects promise when blocked', function(assert) {
     assert.expect(2);
 
-    var promiseWindow = new PromiseWindow('./stubs/empty.html'),
+    var promiseWindow = new PromiseWindow(getRelativeURL('./stubs/empty.html')),
         done = assert.async(),
         _open = window.open,
         timeout = setTimeout(function() {
@@ -41,7 +45,7 @@
 
   QUnit.test('Rejects promise when user closes the window', function(assert) {
     assert.expect(2);
-    var promiseWindow = new PromiseWindow('./stubs/empty.html'),
+    var promiseWindow = new PromiseWindow(getRelativeURL('./stubs/empty.html')),
         done = assert.async(),
         timeout = setTimeout(function() {
           assert.ok(false, 'Promise should not be pending before 2000ms');
@@ -69,7 +73,7 @@
 
   QUnit.test('Resolves Promise when receiving a success postMessage', function(assert) {
     assert.expect(3);
-    var promiseWindow = new PromiseWindow('./stubs/post-message-success.html'),
+    var promiseWindow = new PromiseWindow(getRelativeURL('./stubs/post-message-success.html')),
         done = assert.async(),
         timeout = setTimeout(function() {
           assert.ok(false, 'Promise should not be pending before 2000ms');
@@ -95,7 +99,7 @@
 
   QUnit.test('Rejects Promise when receiving a error postMessage', function(assert) {
     assert.expect(2);
-    var promiseWindow = new PromiseWindow('./stubs/post-message-error.html'),
+    var promiseWindow = new PromiseWindow(getRelativeURL('./stubs/post-message-error.html')),
         done = assert.async(),
         timeout = setTimeout(function() {
           assert.ok(false, 'Promise should not be pending before 2000ms');
@@ -123,7 +127,7 @@
 
   QUnit.test('Rejects promise', function(assert) {
     assert.expect(2);
-    var promiseWindow = new PromiseWindow('./stubs/empty.html'),
+    var promiseWindow = new PromiseWindow(getRelativeURL('./stubs/empty.html')),
         done = assert.async(),
         timeout = setTimeout(function() {
           assert.ok(false, 'Promise should not be pending before 2000ms');
