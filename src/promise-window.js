@@ -115,14 +115,7 @@
     width: html.clientWidth,
     height: html.clientHeight,
     watcherDelay: 100,
-    promiseProvider: function promiseProvider() {
-      var module = {};
-      module.promise = new Promise(function(resolve, reject) {
-        module.resolve = resolve;
-        module.reject = reject;
-      })
-      return module;
-    },
+    promiseProvider: null,
     onPostMessage: function onPostMessage(event) {
       if (event.data.error) {
         this._reject(event.data.error);
@@ -133,6 +126,31 @@
     },
     windowName: null
   };
+
+  function generatePromiseProvider(PromiseAPlus) {
+    return function promiseProvider() {
+      var module = {};
+      module.promise = new PromiseAPlus(function(resolve, reject) {
+        module.resolve = resolve;
+        module.reject = reject;
+      });
+      return module;
+    }
+  }
+
+  if (root.Promise) {
+    PromiseWindow.defaultConfig.promiseProvider = generatePromiseProvider(root.Promise);
+  }
+  else if (root.jQuery) {
+    PromiseWindow.defaultConfig.promiseProvider = function promiseProvider() {
+      var deferred = root.jQuery.Deferred();
+      return {
+        promise: deferred.promise(),
+        resolve: deferred.resolve,
+        reject: deferred.reject
+      };
+    };
+  }
 
   prototype = PromiseWindow.prototype;
 
