@@ -15,6 +15,7 @@
    * @param {Object} object1 An object containing additional properties to merge in.
    * @param {Object} objectN An object containing additional properties to merge in.
    * @return {Object} Returns the first object.
+   * @ignore
    */
   function extend() {
     var extended = arguments[0], key, i;
@@ -33,6 +34,7 @@
    *
    * @param  {String} prefix Optional.
    * @return {String} Returns a pseudo-unique string prefixed with the given prefix, if any.
+   * @ignore
    */
   function generateUniqueString(prefix) {
     return prefix + new Date().getTime() + "-" + Math.floor(10e12 * Math.random());
@@ -50,10 +52,6 @@
    * Instanciating this prototype does not immediately opens a new popup window.
    * To open the window, use `open()` on the created object.
    *
-   * @see #open()
-   * @see #close()
-   * @see PromiseWindow#open()
-   *
    * @param {String}   url                    Destination URL
    * @param {Object}   config                 Configuration object. See description below.
    * @param {Number}   config.width           Width of the popup window. Defaults to the current document width.
@@ -67,6 +65,7 @@
    *                                          message, except if this data contains an `error` field. In this case,
    *                                          it rejects the Promise with the value of that field. In all cases, closes
    *                                          the popup window.
+   * @param {Function} config.onPostMessage.event Event The postMessage event
    * @param {Number}   config.watcherDelay    There is no programmatic way of knowing when a popup window is closed
    *                                          (either manually or programatically). For this reason, every time
    *                                          PromiseWindow opens a popup, a new watcher is created. The watcher checks
@@ -92,8 +91,9 @@
    *       promiseProvider: PromiseWindow.getAPlusPromiseProvider(MyCustomPromise)
    *     });
    *
-   * @param  {[type]} CustomPromise Promise/A+ contructor
+   * @param  {Function} CustomPromise Promise/A+ contructor
    * @return {Function} Returns a promise provider
+   * @static
    */
   PromiseWindow.getAPlusPromiseProvider = function getAPlusPromiseProvider(CustomPromise) {
     return function promiseProvider() {
@@ -119,8 +119,8 @@
    *     // ...
    *     w.close();
    *
-   * @see PromiseWindow
    * @return {Promise} Returns a Promise equivalent to the one returned by `open()`
+   * @static
    */
   PromiseWindow.open = function open(url, config) {
     return new PromiseWindow(url, config).open();
@@ -172,6 +172,7 @@
   /**
    * Generates window features based on the current configuration
    * @return {String} Returns window features compatible with `window.open`
+   * @protected
    */
   prototype._getFeatures = function _getFeatures() {
     var width = this.config.width,
@@ -195,8 +196,9 @@
    *
    * @return {Promise} Returns the new Promise object created by the configured
    *                   Promise Provider.
+   * @protected
    */
-  prototype._createPromise = function() {
+  prototype._createPromise = function _createPromise() {
     var module = this.config.promiseProvider();
     this._resolve = module.resolve;
     this._reject = module.reject;
@@ -206,6 +208,7 @@
   /**
    * Checks whether the window is alive or not
    * @return {Boolean} Returns `true` if the window is alive, `false` otherwise
+   * @protected
    */
   prototype._isWindowAlive = function _isWindowAlive() {
     return this._window && !this._window.closed;
@@ -214,6 +217,7 @@
   /**
    * Starts the popup window watcher.
    * @return {void}
+   * @protected
    */
   prototype._startWatcher = function _startWatcher() {
     if (this._watcherRunning) {
@@ -230,6 +234,7 @@
   /**
    * Stops the popup window watcher.
    * @return {void}
+   * @protected
    */
   prototype._stopWatcher = function _stopWatcher() {
     if (!this._watcherRunning) {
@@ -244,9 +249,11 @@
    * generated from the opened popup window, it propagates it to the configured
    * post message handler (`config.onPostMessage`).
    *
+   * @param {Event} event The postMessage event
    * @return {void}
+   * @protected
    */
-  prototype._onPostMessage = function(event) {
+  prototype._onPostMessage = function _onPostMessage(event) {
     if (this._window === event.source) {
       this.config.onPostMessage.apply(this, [event]);
     }
