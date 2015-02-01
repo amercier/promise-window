@@ -1,4 +1,4 @@
-(function() {
+(function(QUnit) {
   'use strict';
 
   function getRelativeURL(relativeURL) {
@@ -208,4 +208,4 @@
   });
 
 
-})();
+})(window.QUnit);
