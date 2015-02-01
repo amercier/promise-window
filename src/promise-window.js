@@ -141,6 +141,9 @@
   if (root.Promise) {
     PromiseWindow.defaultConfig.promiseProvider = generatePromiseProvider(root.Promise);
   }
+  else if (root.RSVP) {
+    PromiseWindow.defaultConfig.promiseProvider = generatePromiseProvider(root.RSVP.Promise);
+  }
   else if (root.jQuery) {
     PromiseWindow.defaultConfig.promiseProvider = function promiseProvider() {
       var deferred = root.jQuery.Deferred();
