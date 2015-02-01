@@ -2,7 +2,6 @@
   'use strict';
 
   var root = window,
-      errorMessage = 'Window is already ',
       prototype,
       html = root.document.documentElement;
 
@@ -218,7 +217,7 @@
    */
   prototype._startWatcher = function _startWatcher() {
     if (this._watcherRunning) {
-      throw new Error(errorMessage + 'running');
+      throw new Error('Watcher is already started');
     }
     this._watcher = root.setInterval(function () {
       if (this._watcherRunning && !this._isWindowAlive()) {
@@ -234,7 +233,7 @@
    */
   prototype._stopWatcher = function _stopWatcher() {
     if (!this._watcherRunning) {
-      throw new Error(errorMessage + 'stopped');
+      throw new Error('Watcher is already stopped');
     }
     this._watcherRunning = false;
     root.clearInterval(this._watcher);
@@ -269,7 +268,7 @@
    */
   prototype.open = function open() {
     if (this.isOpen()) {
-      throw new Error(errorMessage + 'open');
+      throw new Error('Window is already open');
     }
     this._windowOpen = true;
     var promise = this._createPromise();
@@ -295,7 +294,7 @@
    */
   prototype.close = function close() {
     if (!this.isOpen()) {
-      throw new Error(errorMessage + 'closed');
+      throw new Error('Window is already closed');
     }
     this._stopWatcher();
     root.removeEventListener("message", this._onPostMessage);

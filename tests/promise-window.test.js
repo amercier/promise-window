@@ -72,13 +72,14 @@
   });
 
   QUnit.test('Resolves Promise when receiving a success postMessage', function(assert) {
-    assert.expect(3);
+    assert.expect(5);
     var promiseWindow = new PromiseWindow(getRelativeURL('./stubs/post-message-success.html')),
-        done = assert.async(),
+        done1 = assert.async(),
+        done2 = assert.async(),
         timeout = setTimeout(function() {
           assert.ok(false, 'Promise should not be pending before 2000ms');
           promiseWindow._window.close();
-          done();
+          done1();
         }, 2000);
 
     promiseWindow.open().then(
@@ -87,14 +88,29 @@
         assert.ok(true, 'Promise should be resolved');
         assert.notEqual(data, undefined, 'Resolve data is passed to the callback');
         assert.deepEqual(data, { result: 'OK' }, 'Resolve data contains the post message data');
-        done();
+        done1();
       },
       function(error) {
         clearTimeout(timeout);
         assert.ok(false, 'Promise should not be rejected (' + error + ')');
-        done();
+        done1();
       }
     );
+
+    assert.throws(
+      function() { promiseWindow.open(); },
+      'Error: Window is already open',
+      'open() should throw an Error whan called twice'
+    );
+
+    assert.throws(
+      function() { promiseWindow._startWatcher(); },
+      'Error: Watcher is already started',
+      '_startWatcher() should throw an Error whan called after window is opened'
+    );
+
+    done2();
+
   });
 
   QUnit.test('Rejects Promise when receiving a error postMessage', function(assert) {
@@ -126,32 +142,70 @@
   QUnit.module('close()');
 
   QUnit.test('Rejects promise', function(assert) {
-    assert.expect(2);
+    assert.expect(4);
     var promiseWindow = new PromiseWindow(getRelativeURL('./stubs/empty.html')),
-        done = assert.async(),
+        done1 = assert.async(),
+        done2 = assert.async(),
         timeout = setTimeout(function() {
           assert.ok(false, 'Promise should not be pending before 2000ms');
           promiseWindow._window.close();
-          done();
+          done1();
         }, 2000);
 
     promiseWindow.open().then(
       function() {
         clearTimeout(timeout);
         assert.ok(false, 'Promise should not be resolved');
-        done();
+        done1();
       },
       function(error) {
         clearTimeout(timeout);
         assert.ok(true, 'Promise has been rejected');
         assert.strictEqual(error, 'closed', 'Promise has been rejected with "closed" reason');
-        done();
+        done1();
       }
     );
 
+
     setTimeout(function() {
       promiseWindow.close();
+
+      assert.throws(
+        function() { promiseWindow.close(); },
+        'Error: Window is already closed',
+        'close() should throw an Error whan called twice'
+      );
+
+      assert.throws(
+        function() { promiseWindow._stopWatcher(); },
+        'Error: Watcher is already stopped',
+        '_stopWatcher() should throw an Error whan called after window is closed'
+      );
+
+      done2();
     }, 0);
   });
+
+
+  QUnit.module('PromiseWindow.open()');
+
+  QUnit.test('Resolves Promise when receiving a success postMessage', function(assert) {
+    assert.expect(3);
+    var done = assert.async();
+
+    PromiseWindow.open(getRelativeURL('./stubs/post-message-success.html')).then(
+      function(data) {
+        assert.ok(true, 'Promise should be resolved');
+        assert.notEqual(data, undefined, 'Resolve data is passed to the callback');
+        assert.deepEqual(data, { result: 'OK' }, 'Resolve data contains the post message data');
+        done();
+      },
+      function(error) {
+        assert.ok(false, 'Promise should not be rejected (' + error + ')');
+        done();
+      }
+    );
+  });
+
 
 })();
