@@ -1,6 +1,7 @@
 {
   "name": "promise-window",
   "devDependencies": {
-    "qunit": "~1.17.1"
+    "qunit": "~1.17.1",
+    "sinon": "http://sinonjs.org/releases/sinon-1.12.2.js"
   }
 }
