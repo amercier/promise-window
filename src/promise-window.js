@@ -157,7 +157,7 @@
   else if (root.RSVP) {
     PromiseWindow.defaultConfig.promiseProvider = PromiseWindow.getAPlusPromiseProvider(root.RSVP.Promise);
   }
-   else if (root.Q) {
+  else if (root.Q) {
     PromiseWindow.defaultConfig.promiseProvider = PromiseWindow.getAPlusPromiseProvider(root.Q.Promise);
   }
   else if (root.jQuery) {
