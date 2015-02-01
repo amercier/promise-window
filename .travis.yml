@@ -14,4 +14,5 @@ before_script:
 after_success:
 - codeclimate < tests/coverage/report.lcov
 - coveralls < tests/coverage/report.lcov
+- npm run build
 - npm run docs

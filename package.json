@@ -7,12 +7,17 @@
     "tdd": "./node_modules/karma/bin/karma start",
     "report": "istanbul report && cat tests/coverage/summary.txt && echo",
     "test": "npm run lint && npm run clean && for suite in $([ \"$SUITE\" = \"\" ] && npm run -s list || echo $SUITE); do SUITE=$suite CI=true npm run tdd || exit 1; done && npm run report",
+    "build": "gulp build",
     "docs": "jsduck src/ --output docs/api --warnings-exit-nonzero"
   },
   "devDependencies": {
     "bower": "^1.3.12",
     "codeclimate-test-reporter": "0.0.4",
     "coveralls": "^2.11.2",
+    "gulp": "^3.8.10",
+    "gulp-rename": "^1.2.0",
+    "gulp-size": "^1.2.0",
+    "gulp-uglify": "^1.1.0",
     "istanbul": "^0.3.5",
     "jshint": "^2.6.0",
     "jshint-stylish": "^1.0.0",
