@@ -150,11 +150,15 @@
     windowName: null
   };
 
+  // Configure default Promise provider from current invironment
   if (root.Promise) {
     PromiseWindow.defaultConfig.promiseProvider = PromiseWindow.getAPlusPromiseProvider(root.Promise);
   }
   else if (root.RSVP) {
     PromiseWindow.defaultConfig.promiseProvider = PromiseWindow.getAPlusPromiseProvider(root.RSVP.Promise);
+  }
+   else if (root.Q) {
+    PromiseWindow.defaultConfig.promiseProvider = PromiseWindow.getAPlusPromiseProvider(root.Q.Promise);
   }
   else if (root.jQuery) {
     PromiseWindow.defaultConfig.promiseProvider = function promiseProvider() {
