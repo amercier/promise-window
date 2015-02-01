@@ -6,9 +6,6 @@
       prototype,
       html = root.document.documentElement;
 
-  // Exports PromiseWindow to the global scope
-  root.PromiseWindow = PromiseWindow;
-
   /**
    * Merge the contents of two or more objects together into the first object.
    *
@@ -317,5 +314,8 @@
   prototype.isOpen = function isOpen() {
     return this._windowOpen;
   };
+
+  // Exports PromiseWindow to the global scope
+  root.PromiseWindow = PromiseWindow;
 
 })();
