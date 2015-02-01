@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <title>PromiseWindow Demo</title>
+  <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+  <style>
+body {
+  padding-top: 80px;
+}
+
+.jumbotron {
+  text-align: center;
+  background-color: transparent;
+}
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">PromiseWindow</a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Demo</a></li>
+          <li><a href="./api/">API Documentation</a></li>
+          <li><a href="https://github.com/amercier/promise-window" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <div class="jumbotron">
+      <h1>PromiseWindow demo</h1>
+      <p class="lead">
+        Click on the button below to open a new popup window. The state of the
+        popup window is handled easily with a Promise object.
+      </p>
+      <form name="demo">
+        <input class="btn btn-lg btn-success" type="submit" value="Open new window" disabled />
+      </form>
+    </div>
+
+    <div class="alert" role="alert"><!-- Success/error message will go here --></div>
+
+  </div>
+
+  <script src="../bower_components/bind-polyfill/index.js"></script>
+  <script src="../bower_components/jquery/dist/jquery.js"></script>
+  <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="../src/promise-window.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>

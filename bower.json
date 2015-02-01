@@ -7,6 +7,7 @@
     "rsvp": "~3.0.16",
     "q": "~1.1.2",
     "bind-polyfill": "~1.0.0",
-    "promise-polyfill": "~1.1.4"
+    "promise-polyfill": "~1.1.4",
+    "bootstrap": "~3.3.2"
   }
 }

@@ -72,5 +72,6 @@
   "yui": false,
 
   "globals": {
+    "PromiseWindow": true
   }
 }

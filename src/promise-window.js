@@ -78,7 +78,7 @@
    */
   function PromiseWindow(url, config) {
     this.url = url;
-    this.config = extend({}, config, this.constructor.defaultConfig);
+    this.config = extend({}, this.constructor.defaultConfig, config);
     this.config.windowName = this.config.windowName || generateUniqueString('promise-window-');
     this._onPostMessage = this._onPostMessage.bind(this);
   }
@@ -207,8 +207,8 @@
    * Checks whether the window is alive or not
    * @return {Boolean} Returns `true` if the window is alive, `false` otherwise
    */
-  prototype._isWindowAlive = function _hasWindowDied() {
-    return this._window && !!this._window.document;
+  prototype._isWindowAlive = function _isWindowAlive() {
+    return this._window && !this._window.closed;
   };
 
   /**
@@ -281,8 +281,8 @@
       this._reject("blocked");
     }
     else {
-      this._startWatcher();
       root.addEventListener("message", this._onPostMessage, true);
+      this._startWatcher();
     }
     return promise;
   };
@@ -299,6 +299,7 @@
     this._stopWatcher();
     root.removeEventListener("message", this._onPostMessage);
     if (this._isWindowAlive()) {
+      this._window.onclose = null;
       this._window.close();
     }
     this._reject("closed");
