@@ -28,7 +28,16 @@ module.exports = function(config) {
         'tests/*.test.js'
       ]),
     browsers: process.env.CI ? [ 'PhantomJS' ] : [ 'Chrome', 'PhantomJS_debug' ],
-    reporters: process.env.CI ? [ 'dots' ] : [ 'progress' ],
+    reporters: process.env.CI ? [ "dots", "coverage" ] : [ "progress" ],
+    preprocessors: !process.env.CI ? {} : {
+      "src/**/*.js": [ "coverage" ]
+    },
+    coverageReporter: !process.env.CI ? {} : {
+      dir: "tests/coverage",
+      reporters: [
+        { type: "json", subdir: ".", file: "coverage-" + (process.env.SUITE) + ".json" }
+      ]
+    },
     customLaunchers: process.env.CI ? {} : {
       'PhantomJS_debug': {
         base: 'PhantomJS',

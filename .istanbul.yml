@@ -1,0 +1,17 @@
+instrumentation:
+  root: ./tests/coverage
+reporting:
+  print: summary
+  dir: ./tests/coverage/html
+  reports:
+    - html
+    - lcovonly
+    - text
+    - text-summary
+  report-config:
+    lcovonly:
+      file: ../report.lcov
+    text:
+      file: ../report.txt
+    text-summary:
+      file: ../summary.txt
