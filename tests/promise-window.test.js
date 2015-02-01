@@ -4,6 +4,41 @@
 
   QUnit.module('open()');
 
+  QUnit.test('Rejects promise when blocked', function(assert) {
+    assert.expect(2);
+
+    var promiseWindow = new PromiseWindow('./stubs/empty.html'),
+        done = assert.async(),
+        _open = window.open,
+        timeout = setTimeout(function() {
+          assert.ok(false, 'Promise should not be pending before 2000ms');
+          _done();
+        }, 2000);
+
+    function _done() {
+      window.open = _open;
+      done();
+    };
+
+    window.open = function blocked() {
+      return null;
+    };
+
+    promiseWindow.open().then(
+      function() {
+        clearTimeout(timeout);
+        assert.ok(false, 'Promise should not be resolved');
+        _done();
+      },
+      function(error) {
+        clearTimeout(timeout);
+        assert.ok(true, 'Promise has been rejected');
+        assert.strictEqual(error, 'blocked', 'Promise is rejected with "blocked" reason');
+        _done();
+      }
+    );
+  });
+
   QUnit.test('Rejects promise when user closes the window', function(assert) {
     assert.expect(2);
     var promiseWindow = new PromiseWindow('./stubs/empty.html'),
