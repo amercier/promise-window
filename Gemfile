@@ -1,2 +1,5 @@
 source 'https://rubygems.org'
-gem 'jsduck'
+
+group :development do
+  gem 'jsduck'
+end
