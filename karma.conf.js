@@ -23,7 +23,7 @@ module.exports = function(config) {
           rsvp: 'bower_components/rsvp/rsvp.js',
           q: 'bower_components/q/q.js'
         }[process.env.SUITE || 'native'],
-        { pattern: 'tests/stubs/*.html', watched: true, included: false, served: true },
+        { pattern: 'tests/stubs/*', watched: true, included: false, served: true },
         'src/promise-window.js',
         'tests/*.test.js'
       ]),
