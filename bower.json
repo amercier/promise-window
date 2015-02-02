@@ -28,6 +28,7 @@
     ".jshintrc",
     ".travis.yml",
     "docs",
+    "deploy-github.sh",
     "Gemfile",
     "Gemfile.lock",
     "gulpfile.js",
