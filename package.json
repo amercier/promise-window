@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "clean": "for dir in bower_components docs/.git docs/api docs/bower_components node_modules tests/coverage; do [ ! -e $dir ] || rm -rf $dir || exit 1; done",
+    "clean": "for dir in docs/.git docs/api docs/bower_components tests/coverage; do [ ! -e $dir ] || rm -rf $dir || exit 1; done",
     "lint": "jshint --reporter node_modules/jshint-stylish/stylish.js .",
     "list": "find tests -maxdepth 1 -type f -name *.html | while read f; do basename \"$f\" .html; done | sed 's/^test-//'",
     "tdd": "./node_modules/karma/bin/karma start",
