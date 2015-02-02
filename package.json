@@ -8,7 +8,7 @@
     "report": "istanbul report && cat tests/coverage/summary.txt && echo",
     "test": "npm run lint && npm run clean && for suite in $([ \"$SUITE\" = \"\" ] && npm run -s list || echo $SUITE); do SUITE=$suite CI=true npm run tdd || exit 1; done && npm run report",
     "build": "gulp build",
-    "docs": "(cd docs && bower install) && jsduck src/ --output docs/api --warnings-exit-nonzero",
+    "docs": "(cd docs && bower install --production) && jsduck src/ --output docs/api --warnings-exit-nonzero",
     "deploy": "./deploy-github.sh docs amercier/promise-window"
   },
   "devDependencies": {
