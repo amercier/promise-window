@@ -1,5 +1,43 @@
 {
   "name": "promise-window",
+  "description": "Lightweight wrapper around window.open() that adds Promise and postMessage support",
+  "licence": "MIT",
+  "keywords": [
+    "popup",
+    "window",
+    "open",
+    "window.open",
+    "promise",
+    "promise-aplus",
+    "postMessage"
+  ],
+  "authors": [
+    { "name": "Alex Mercier", "email": "pro.alexandre.mercier@gmail.com", "homepage": "http://amercier.com" }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/amercier/promise-window.git"
+  },
+  "main": "dist/promise-window.js",
+  "ignore": [
+    ".editorconfig",
+    ".git",
+    ".gitignore",
+    ".istanbul.yml",
+    ".jshintignore",
+    ".jshintrc",
+    ".travis.yml",
+    "docs",
+    "Gemfile",
+    "Gemfile.lock",
+    "gulpfile.js",
+    "karma.conf.js",
+    "LICENSE",
+    "node_modules",
+    "package.json",
+    "src",
+    "tests"
+  ],
   "devDependencies": {
     "jquery": "~2.1.3",
     "qunit": "~1.17.1",
