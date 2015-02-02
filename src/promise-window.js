@@ -1,6 +1,7 @@
 /**
  * PromiseWindow
  * https://github.com/amercier/promise-window
+ * @ignore
  */
 (function() {
   'use strict';
