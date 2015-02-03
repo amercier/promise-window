@@ -16,7 +16,7 @@
   "noarg": true,
   "noempty": true,
   "nonbsp": true,
-  "nonew": true,
+  "nonew": false,
   "plusplus": false,
   "undef": true,
   "unused": true,

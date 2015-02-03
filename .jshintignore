@@ -1,5 +1,6 @@
 bower_components
 dist
+docs/bower_components
 docs/api
 node_modules
 tests/coverage

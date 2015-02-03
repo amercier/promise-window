@@ -48,16 +48,13 @@
   /**
    * Create a new PromiseWindow object
    *
-   * Each instance is associated with one URL. It is not encouraged to use it
-   * with multiple URLs. Instead, consider instanciating new objects.
-   *
    * During the lifecycle of this object, popup windows can be opened, closed,
    * and reopened again. However, it'
    *
    * Instanciating this prototype does not immediately opens a new popup window.
    * To open the window, use `open()` on the created object.
    *
-   * @param {String}   url                    Destination URL
+   * @param {String}   uri                    Destination URI
    * @param {Object}   config                 Configuration object. See description below.
    * @param {Number}   config.width           Width of the popup window. Defaults to the current document width.
    * @param {Number}   config.height          Height of the popup window. Defaults to the current document height.
@@ -80,8 +77,8 @@
    *                                          details. If `null`, a random name is generated.
    * @constructor
    */
-  function PromiseWindow(url, config) {
-    this.url = url;
+  function PromiseWindow(uri, config) {
+    this.uri = uri;
     this.config = extend({}, this.constructor.defaultConfig, config);
     this.config.windowName = this.config.windowName || generateUniqueString('promise-window-');
     this._onPostMessage = this._onPostMessage.bind(this);
@@ -114,12 +111,12 @@
   /**
    * Convenience method for:
    *
-   *     new PromiseWindow(url, config).open()
+   *     new PromiseWindow(uri, config).open()
    *
    * Use this method only if you never need to close the window programatically.
    * If you do, please consider using the classic way:
    *
-   *     var w = new PromiseWindow(url, config)
+   *     var w = new PromiseWindow(uri, config)
    *     w.open();
    *     // ...
    *     w.close();
@@ -127,8 +124,8 @@
    * @return {Promise} Returns a Promise equivalent to the one returned by `open()`
    * @static
    */
-  PromiseWindow.open = function open(url, config) {
-    return new PromiseWindow(url, config).open();
+  PromiseWindow.open = function open(uri, config) {
+    return new PromiseWindow(uri, config).open();
   };
 
   /**
@@ -265,6 +262,21 @@
   };
 
   /**
+   * Change the URI
+   *
+   * @param {[type]} uri [description]
+   * @throws {Error} If the window is open
+   * @return {PromiseWindow} Returns this object to allow chaining
+   */
+  prototype.setURI = function setURI(uri) {
+    if (this.isOpen()) {
+      throw new Error('Cannot change the URI while the window is open');
+    }
+    this.uri = uri;
+    return this;
+  };
+
+  /**
    * Open a new popup window.
    *
    * @return {Promise} Returns a new `Promise` object. This promise will be:
@@ -285,7 +297,7 @@
     this._windowOpen = true;
     var promise = this._createPromise();
     this._window = root.open(
-      this.url,
+      this.uri,
       this.config.windowName,
       this._getFeatures()
     );
