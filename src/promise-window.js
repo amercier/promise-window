@@ -257,7 +257,7 @@
    */
   prototype._onPostMessage = function _onPostMessage(event) {
     if (this._window === event.source) {
-      this.config.onPostMessage.apply(this, [event]);
+      this.config.onPostMessage.call(this, event);
     }
   };
 
