@@ -6,7 +6,7 @@ after_success:
 - codeclimate < tests/coverage/report.lcov
 - coveralls < tests/coverage/report.lcov
 - npm run docs
-- npm run deploy
+- test "$TRAVIS_PULL_REQUEST" == false && npm run deploy
 cache:
   directories:
   - bower_components
