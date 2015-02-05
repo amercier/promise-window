@@ -1,5 +1,31 @@
 {
-  "private": true,
+  "name": "promise-window",
+  "version": "0.3.4",
+  "description": "Lightweight wrapper around window.open() that adds Promise and postMessage support",
+  "keywords": [
+    "popup",
+    "window",
+    "open",
+    "window.open",
+    "promise",
+    "promise-aplus",
+    "postMessage"
+  ],
+  "homepage": "http://amercier.github.io/promise-window/",
+  "bugs": {
+    "url" : "https://github.com/amercier/promise-window/issues",
+    "email" : "pro.alexandre.mercier@gmail.com"
+  },
+  "license": "MIT",
+  "author": "Alex Mercier <pro.alexandre.mercier@gmail.com> (http://amercier.com/)",
+  "files": [
+    "dist/*.js"
+  ],
+  "main": "dist/promise-window.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amercier/promise-window/"
+  },
   "scripts": {
     "clean": "for dir in docs/.git docs/api docs/bower_components tests/coverage; do [ ! -e $dir ] || rm -rf $dir || exit 1; done",
     "lint": "jshint --reporter node_modules/jshint-stylish/stylish.js .",
