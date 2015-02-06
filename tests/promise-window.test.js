@@ -12,6 +12,40 @@
     return base ? relativeURI.replace(/^\./, base.href) : relativeURI;
   }
 
+  QUnit.module('config');
+
+  QUnit.test('onPostMessage is called', function(assert) {
+    assert.expect(1);
+
+    var config = getConfig(),
+        promiseWindow,
+        done = assert.async(),
+        timeout = setTimeout(function() {
+          assert.ok(false, 'Promise should not be pending before 2000ms');
+          done();
+        }, 2000),
+        called = false;
+
+    config.onPostMessage = function(data) {
+      called = true;
+      return PromiseWindow.defaultConfig.onPostMessage.call(this, data);
+    };
+    promiseWindow = new PromiseWindow(getRelativeURI('./stubs/post-message-success.html'), config);
+
+    promiseWindow.open().then(
+      function() {
+        clearTimeout(timeout);
+        assert.ok(called, 'onPostMessage has been called');
+        done();
+      },
+      function() {
+        clearTimeout(timeout);
+        assert.ok(false, 'Promise should not be rejected');
+        done();
+      }
+    );
+  });
+
   QUnit.module('open()');
 
   QUnit.test('Rejects promise when blocked', function(assert) {
