@@ -113,6 +113,48 @@
 
   });
 
+  QUnit.test('Resolves Promise when receiving a success postMessage after a redirection', function(assert) {
+    assert.expect(5);
+    var promiseWindow = new PromiseWindow(getRelativeURI('./stubs/redirect-success.html')),
+        done1 = assert.async(),
+        done2 = assert.async(),
+        timeout = setTimeout(function() {
+          assert.ok(false, 'Promise should not be pending before 2000ms');
+          promiseWindow._window.close();
+          done1();
+        }, 2000);
+
+    promiseWindow.open().then(
+      function(data) {
+        clearTimeout(timeout);
+        assert.ok(true, 'Promise should be resolved');
+        assert.notEqual(data, undefined, 'Resolve data is passed to the callback');
+        assert.deepEqual(data, { result: 'OK' }, 'Resolve data contains the post message data');
+        done1();
+      },
+      function(error) {
+        clearTimeout(timeout);
+        assert.ok(false, 'Promise should not be rejected (' + error + ')');
+        done1();
+      }
+    );
+
+    assert.throws(
+      function() { promiseWindow.open(); },
+      'Error: Window is already open',
+      'open() should throw an Error whan called twice'
+    );
+
+    assert.throws(
+      function() { promiseWindow._startWatcher(); },
+      'Error: Watcher is already started',
+      '_startWatcher() should throw an Error whan called after window is opened'
+    );
+
+    done2();
+
+  });
+
   QUnit.test('Rejects Promise when receiving a error postMessage', function(assert) {
     assert.expect(2);
     var promiseWindow = new PromiseWindow(getRelativeURI('./stubs/post-message-error.html')),
@@ -206,6 +248,5 @@
       }
     );
   });
-
 
 })(window.QUnit);

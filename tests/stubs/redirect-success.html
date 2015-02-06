@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Redirect to Post Message Success page</title>
+  </head>
+  <body>
+    <script>
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          location.href = location.href.replace('redirect', 'post-message');
+        }, 100);
+      }, true);
+    </script>
+  </body>
+</html>
