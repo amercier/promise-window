@@ -12,7 +12,7 @@
     "postMessage"
   ],
   "authors": [
-    { "name": "Alex Mercier", "email": "pro.alexandre.mercier@gmail.com", "homepage": "http://amercier.com" }
+    "Alex Mercier <pro.alexandre.mercier@gmail.com> (http://amercier.com/)"
   ],
   "repository": {
     "type": "git",
@@ -41,6 +41,7 @@
     "rsvp": "~3.0.16",
     "q": "~1.1.2",
     "bind-polyfill": "~1.0.0",
-    "promise-polyfill": "~1.1.4"
+    "promise-polyfill": "~1.1.4",
+    "vow": "~0.4.8"
   }
 }

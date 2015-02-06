@@ -1,6 +1,12 @@
 (function(QUnit) {
   'use strict';
 
+  function getConfig() {
+    return !window.getCustomProvider ? {} : {
+      promiseProvider: window.getCustomProvider()
+    };
+  }
+
   function getRelativeURI(relativeURI) {
     var base = document.querySelector("base");
     return base ? relativeURI.replace(/^\./, base.href) : relativeURI;
@@ -11,7 +17,7 @@
   QUnit.test('Rejects promise when blocked', function(assert) {
     assert.expect(2);
 
-    var promiseWindow = new PromiseWindow(getRelativeURI('./stubs/empty.html')),
+    var promiseWindow = new PromiseWindow(getRelativeURI('./stubs/empty.html'), getConfig()),
         done = assert.async(),
         _open = window.open,
         timeout = setTimeout(function() {
@@ -45,7 +51,7 @@
 
   QUnit.test('Rejects promise when user closes the window', function(assert) {
     assert.expect(2);
-    var promiseWindow = new PromiseWindow(getRelativeURI('./stubs/empty.html')),
+    var promiseWindow = new PromiseWindow(getRelativeURI('./stubs/empty.html'), getConfig()),
         done = assert.async(),
         timeout = setTimeout(function() {
           assert.ok(false, 'Promise should not be pending before 2000ms');
@@ -73,7 +79,7 @@
 
   QUnit.test('Resolves Promise when receiving a success postMessage', function(assert) {
     assert.expect(5);
-    var promiseWindow = new PromiseWindow(getRelativeURI('./stubs/post-message-success.html')),
+    var promiseWindow = new PromiseWindow(getRelativeURI('./stubs/post-message-success.html'), getConfig()),
         done1 = assert.async(),
         done2 = assert.async(),
         timeout = setTimeout(function() {
@@ -115,7 +121,7 @@
 
   QUnit.test('Resolves Promise when receiving a success postMessage after a redirection', function(assert) {
     assert.expect(5);
-    var promiseWindow = new PromiseWindow(getRelativeURI('./stubs/redirect-success.html')),
+    var promiseWindow = new PromiseWindow(getRelativeURI('./stubs/redirect-success.html'), getConfig()),
         done1 = assert.async(),
         done2 = assert.async(),
         timeout = setTimeout(function() {
@@ -157,7 +163,7 @@
 
   QUnit.test('Rejects Promise when receiving a error postMessage', function(assert) {
     assert.expect(2);
-    var promiseWindow = new PromiseWindow(getRelativeURI('./stubs/post-message-error.html')),
+    var promiseWindow = new PromiseWindow(getRelativeURI('./stubs/post-message-error.html'), getConfig()),
         done = assert.async(),
         timeout = setTimeout(function() {
           assert.ok(false, 'Promise should not be pending before 2000ms');
@@ -185,7 +191,7 @@
 
   QUnit.test('Rejects promise', function(assert) {
     assert.expect(4);
-    var promiseWindow = new PromiseWindow(getRelativeURI('./stubs/empty.html')),
+    var promiseWindow = new PromiseWindow(getRelativeURI('./stubs/empty.html'), getConfig()),
         done1 = assert.async(),
         done2 = assert.async(),
         timeout = setTimeout(function() {
@@ -235,7 +241,7 @@
     assert.expect(3);
     var done = assert.async();
 
-    PromiseWindow.open(getRelativeURI('./stubs/post-message-success.html')).then(
+    PromiseWindow.open(getRelativeURI('./stubs/post-message-success.html'), getConfig()).then(
       function(data) {
         assert.ok(true, 'Promise should be resolved');
         assert.notEqual(data, undefined, 'Resolve data is passed to the callback');

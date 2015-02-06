@@ -168,6 +168,11 @@
       };
     };
   }
+  else {
+    PromiseWindow.defaultConfig.promiseProvider = function() {
+      throw new Error('Missing promiseProvider in PromiseWindow configuration');
+    };
+  }
 
   prototype = PromiseWindow.prototype;
 

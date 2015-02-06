@@ -10,19 +10,24 @@ module.exports = function(config) {
 
   config.set({
     frameworks: [ 'qunit', 'sinon' ],
-    files: (
-        process.env.SUITE === 'native' ?
-          [] :
-          ['tests/config/disable-native-promise.js']
-      ).concat([
+    files: [
         'tests/config/karma-init.js',
-        'bower_components/bind-polyfill/index.js',
+        'bower_components/bind-polyfill/index.js'
+      ].concat(
         {
-          native: 'bower_components/promise-polyfill/Promise.js',
-          jquery: 'bower_components/jquery/dist/jquery.js',
-          rsvp: 'bower_components/rsvp/rsvp.js',
-          q: 'bower_components/q/q.js'
-        }[process.env.SUITE || 'native'],
+          jquery: ['bower_components/jquery/dist/jquery.js'],
+          rsvp: ['bower_components/rsvp/rsvp.js'],
+          q: ['bower_components/q/q.js'],
+          native: [
+            'tests/config/disable-native-promise.js',
+            'bower_components/promise-polyfill/Promise.js'
+          ],
+          'promise-provider-aplus': [
+            'bower_components/vow/lib/vow.js',
+            'tests/config/promise-provider-aplus.js',
+          ]
+        }[process.env.SUITE || 'native']
+      ).concat([
         { pattern: 'tests/stubs/*', watched: true, included: false, served: true },
         'src/promise-window.js',
         'tests/*.test.js'
