@@ -24,7 +24,11 @@ module.exports = function(config) {
           ],
           'promise-provider-aplus': [
             'bower_components/vow/lib/vow.js',
-            'tests/config/promise-provider-aplus.js',
+            'tests/config/promise-provider-aplus.js'
+          ],
+          'promise-provider-custom': [
+            'bower_components/ayepromise/ayepromise.js',
+            'tests/config/promise-provider-custom.js'
           ]
         }[process.env.SUITE || 'native']
       ).concat([

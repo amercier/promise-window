@@ -42,6 +42,7 @@
     "q": "~1.1.2",
     "bind-polyfill": "~1.0.0",
     "promise-polyfill": "~1.1.4",
-    "vow": "~0.4.8"
+    "vow": "~0.4.8",
+    "ayepromise": "~1.1.1"
   }
 }
