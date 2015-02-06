@@ -235,6 +235,65 @@
   });
 
 
+  QUnit.module('setURI()');
+
+  QUnit.test('Rejects Promise when receiving a error postMessage', function(assert) {
+    assert.expect(1);
+    var promiseWindow = new PromiseWindow(getRelativeURI('./stubs/post-message-error.html'), getConfig()),
+        done = assert.async(),
+        timeout = setTimeout(function() {
+          assert.ok(false, 'Promise should not be pending before 2000ms');
+          promiseWindow._window.close();
+          done();
+        }, 2000);
+
+    promiseWindow.setURI(getRelativeURI('./stubs/post-message-success.html'));
+
+    promiseWindow.open().then(
+      function() {
+        clearTimeout(timeout);
+        assert.ok(true, 'Promise should be resolved');
+        done();
+      },
+      function(error) {
+        clearTimeout(timeout);
+        assert.ok(false, 'Promise should not be rejected (' + error + ')');
+        done();
+      }
+    );
+  });
+
+  QUnit.test('Throws an error when called while the window is open', function(assert) {
+    assert.expect(1);
+    var promiseWindow = new PromiseWindow(getRelativeURI('./stubs/empty.html'), getConfig()),
+        done = assert.async(),
+        timeout = setTimeout(function() {
+          done();
+        }, 2000);
+
+    promiseWindow.open().then(
+      function() {
+        clearTimeout(timeout);
+        done();
+      },
+      function() {
+        clearTimeout(timeout);
+        done();
+      }
+    );
+
+    assert.throws(
+      function() { promiseWindow.setURI('/this-should-fail.html'); },
+      new Error('Cannot change the URI while the window is open'),
+      'Should throw an error when called while the window is open'
+    );
+
+    setTimeout(function() {
+      promiseWindow._window.close();
+    }, 0);
+  });
+
+
   QUnit.module('PromiseWindow.open()');
 
   QUnit.test('Resolves Promise when receiving a success postMessage', function(assert) {
