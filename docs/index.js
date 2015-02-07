@@ -1,4 +1,4 @@
-(function($) {
+(function($, PromiseWindow) {
   'use strict';
 
   $(document).ready(function() {
@@ -48,4 +48,4 @@
     $('[disabled]').prop('disabled', false);
   });
 
-})(window.jQuery);
+})(window.jQuery, window.PromiseWindow);

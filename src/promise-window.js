@@ -347,7 +347,7 @@
   // Exports PromiseWindow to the global scope
   /* jshint ignore:start */
   if (typeof define === 'function' && define.amd) {
-    define([], function() { return PromiseWindow });
+    define('promise-window', [], function() { return PromiseWindow });
   } else if (typeof exports === 'object') {
     module.exports = PromiseWindow;
   } else {
