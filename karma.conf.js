@@ -22,6 +22,11 @@ module.exports = function(config) {
             'tests/config/disable-native-promise.js',
             'bower_components/promise-polyfill/Promise.js'
           ],
+          'native-amd': [
+            'tests/config/disable-native-promise.js',
+            'bower_components/promise-polyfill/Promise.js',
+            'bower_components/requirejs/require.js'
+          ],
           'promise-provider-aplus': [
             'bower_components/vow/lib/vow.js',
             'tests/config/promise-provider-aplus.js'
