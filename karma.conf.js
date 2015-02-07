@@ -6,7 +6,7 @@
 module.exports = function(config) {
   'use strict';
 
-  console.info('========== ' + (process.env.SUITE || 'native') + ' ==========\n');
+  console.info('========== ' + (process.env.KARMA_ENV || 'native') + ' ==========\n');
 
   config.set({
     frameworks: [ 'qunit', 'sinon' ],
@@ -35,7 +35,7 @@ module.exports = function(config) {
             'bower_components/ayepromise/ayepromise.js',
             'tests/config/promise-provider-custom.js'
           ]
-        }[process.env.SUITE || 'native']
+        }[process.env.KARMA_ENV || 'native']
       ).concat([
         { pattern: 'tests/stubs/*', watched: true, included: false, served: true },
         'src/promise-window.js',
@@ -49,7 +49,7 @@ module.exports = function(config) {
     coverageReporter: !process.env.CI ? {} : {
       dir: "tests/coverage",
       reporters: [
-        { type: "json", subdir: ".", file: "coverage-" + (process.env.SUITE) + ".json" }
+        { type: "json", subdir: ".", file: "coverage-" + (process.env.KARMA_ENV) + ".json" }
       ]
     },
     customLaunchers: process.env.CI ? {} : {

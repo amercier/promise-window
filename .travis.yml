@@ -1,6 +1,6 @@
 sudo: false
 before_script:
-- ./node_modules/.bin/bower install
+- npm run dependencies
 - bundle install
 after_success:
 - codeclimate < tests/coverage/report.lcov
