@@ -36,10 +36,11 @@ Usage
 The simplest way to use PromiseWindow is to use the `PromiseWindow.open`
 convenience method:
 
-##### Main URL: #####
-
 ```javascript
-PromiseWindow.open('http://<TARGET URL>/').then(
+/**
+ * index.html
+ */
+PromiseWindow.open('http://popup.html').then(
   
   // Success
   function(data) {
@@ -60,12 +61,15 @@ PromiseWindow.open('http://<TARGET URL>/').then(
 );
 ```
 
-##### Target URL: #####
+```javascript
+/**
+ * popup.html
+ */
 
-```javascript
+// report succees
 opener.postMessage({ result: 'yeah' }, location.origin); // (1)
-```
-```javascript
+
+// report error
 opener.postMessage({ error: 'my-custom-message' }, location.origin); // (2)
 ```
 
@@ -75,8 +79,8 @@ opener.postMessage({ error: 'my-custom-message' }, location.origin); // (2)
 Instanciating the `PromiseWindow` prototype gives you more control. The
 following example shows how to close the window after 30 seconds.
 
-```javascript```
-var promiseWindow = new PromiseWindow('http://<TARGET URL>/'),
+```javascript
+var promiseWindow = new PromiseWindow('http://popup.html'),
     timeout = window.setTimeout(function() {
       promiseWindow.close();
     }, 30000);
