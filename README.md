@@ -10,6 +10,10 @@ Lightweight wrapper around window.open() that adds Promise and postMessage suppo
 [![Test Coverage](http://img.shields.io/coveralls/amercier/promise-window/master.svg?style=flat-square)](https://coveralls.io/r/amercier/promise-window?branch=master)
 [![Dependency Status](http://img.shields.io/gemnasium/amercier/promise-window.svg?style=flat-square)](https://gemnasium.com/amercier/promise-window)
 
+[![PromiseWindow](https://cloud.githubusercontent.com/assets/1246795/6099683/cdd9e59c-afb3-11e4-92a3-f1688990984f.png)](http://amercier.github.io/promise-window/)
+
+[Live example](http://amercier.github.io/promise-window/)
+
 
 Installation
 ------------
@@ -26,8 +30,6 @@ Installation
 
 Grab a copy of [promise-window](https://raw.githubusercontent.com/amercier/promise-window/master/dist/promise-window.min.js)
 ([development version](https://raw.githubusercontent.com/amercier/promise-window/master/dist/promise-window.js)).
-
-[![PromiseWindow](https://cloud.githubusercontent.com/assets/1246795/6099683/cdd9e59c-afb3-11e4-92a3-f1688990984f.png)](http://amercier.github.io/promise-window/)
 
 
 Usage
