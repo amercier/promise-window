@@ -27,6 +27,75 @@ Installation
 Grab a copy of [promise-window](https://raw.githubusercontent.com/amercier/promise-window/master/dist/promise-window.min.js)
 ([development version](https://raw.githubusercontent.com/amercier/promise-window/master/dist/promise-window.js)).
 
+[![PromiseWindow](https://cloud.githubusercontent.com/assets/1246795/6099683/cdd9e59c-afb3-11e4-92a3-f1688990984f.png)](http://amercier.github.io/promise-window/)
+
+
+Usage
+-----
+
+The simplest way to use PromiseWindow is to use the `PromiseWindow.open`
+convenience method:
+
+##### Main URL: #####
+
+```javascript
+PromiseWindow.open('http://<TARGET URL>/').then(
+  
+  // Success
+  function(data) {
+    // data.result == 'awesome' (1)
+  },
+
+  // Error
+  function(error) {
+    switch(error) {
+      case 'closed':
+        // window has been closed
+        break;
+      case 'my-custom-message':
+        // 'my-custom-message' postMessage has been sent from target URL (2)
+        break;
+    }
+  }
+);
+```
+
+##### Target URL: #####
+
+```javascript
+opener.postMessage({ result: 'yeah' }, location.origin); // (1)
+```
+```javascript
+opener.postMessage({ error: 'my-custom-message' }, location.origin); // (2)
+```
+
+
+### Advanced usage ###
+
+Instanciating the `PromiseWindow` prototype gives you more control. The
+following example shows how to close the window after 30 seconds.
+
+```javascript```
+var promiseWindow = new PromiseWindow('http://<TARGET URL>/'),
+    timeout = window.setTimeout(function() {
+      promiseWindow.close();
+    }, 30000);
+
+promiseWindow.open().then(
+  function(data) {
+    window.clearTimeout(timeout);
+    // ... (success)
+  },
+  function(error) {
+    window.clearTimeout(timeout);
+    // ... (error)
+  }
+);
+```
+
+See [API Documentation](http://amercier.github.io/promise-window/api/#!/api/PromiseWindow)
+for more information about the `PromiseWindow` prototype.
+
 
 Authors
 -------
