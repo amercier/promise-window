@@ -1,6 +1,6 @@
 {
   "name": "promise-window",
-  "version": "0.3.5",
+  "version": "1.0.0",
   "description": "Lightweight wrapper around window.open() that adds Promise and postMessage support",
   "keywords": [
     "popup",
