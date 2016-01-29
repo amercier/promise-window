@@ -28,6 +28,7 @@
   },
   "scripts": {
     "bower": "bower",
+    "dependencies": "npm run bower -- install",
     "clean": "for dir in docs/.git docs/api docs/bower_components tests/coverage; do [ ! -e $dir ] || rm -rf $dir || exit 1; done",
     "lint": "jshint --reporter node_modules/jshint-stylish/stylish.js .",
     "list": "find tests -maxdepth 1 -type f -name *.html | while read f; do basename \"$f\" .html; done | sed 's/^test-//'",
