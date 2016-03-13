@@ -27,7 +27,6 @@
     "url": "https://github.com/amercier/promise-window/"
   },
   "scripts": {
-    "bower": "bower",
     "dependencies": "bower install",
     "clean": "rm -rf docs/.git docs/api docs/bower_components tests/coverage",
     "lint": "jshint --reporter node_modules/jshint-stylish/stylish.js .",
