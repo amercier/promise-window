@@ -55,15 +55,17 @@
       var promiseWindow = new PromiseWindow(getRelativeURI('./stubs/empty.html'), getConfig()),
           done = assert.async(),
           _open = window.open,
-          timeout = setTimeout(function() {
-            assert.ok(false, 'Promise should not be pending before 2000ms');
-            _done();
-          }, 2000);
+          timeout;
 
       function _done() {
         window.open = _open;
         done();
       }
+
+      timeout = setTimeout(function() {
+        assert.ok(false, 'Promise should not be pending before 2000ms');
+        _done();
+      }, 2000);
 
       window.open = function blocked() {
         return null;
