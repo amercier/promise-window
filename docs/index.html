@@ -13,6 +13,22 @@ body {
   text-align: center;
   background-color: transparent;
 }
+
+.options {
+  font-size: 0.85em;
+  margin: 2em 0;
+  opacity: 0.8;
+}
+
+.options > * {
+  margin: 0 0.5em;
+}
+
+.options .input-sm {
+  width: 4em;
+  font-size: inherit;
+  height: 2em;
+}
   </style>
 </head>
 <body>
@@ -43,11 +59,23 @@ body {
     <div class="jumbotron">
       <h1>PromiseWindow</h1>
       <p class="lead">
-        Click on the button below to open a new popup window. The state of the
-        popup window is handled easily with a Promise object.
+        Click on the button below to open a new popup window.<br>
+        The state of the popup window is handled easily with a Promise object.
       </p>
-      <form name="demo">
+      <form name="demo" class="form-inline" role="form">
         <input class="btn btn-lg btn-success" type="submit" value="Open new window" disabled />
+
+        <div class="options">
+          <div class="form-group">
+            <label for="width">width:</label>
+            <input class="form-control input-sm" type="text" name="width" value="350">
+          </div>
+          <div class="form-group">
+            <label for="height">height:</label>
+            <input class="form-control input-sm" type="text" name="height" value="450">
+          </div>
+          <div class="checkbox"><label><input type="checkbox" name="scrollbars" checked> scrollbars</label></div>
+        </div>
       </form>
     </div>
 
