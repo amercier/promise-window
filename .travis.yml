@@ -11,9 +11,4 @@ cache:
   directories:
   - bower_components
   - node_modules
-env:
-  global:
-  - secure: MLWYRa2lxuEmgtRpyr929Y7BDDj4l2YQz9OgfJq3qGuqK1vXsV1A1sQMFlG4GvyNbMhaxedBLIIR9IHHDXTo0aAvhWy8uir55RkGkWZ6+Ywqa9PTimRMbJN296Zt+/Y3ALDcYupp27+UM7o6S+bXK+4lkNvTapRd5Hi/k+QDpIU=
-  - secure: kNtHFVs+2GxC/a/x8H3dpyYF/pGS3XxYrINMKC6YnzZMMk1g2Baap/wJfZ+QeoK4yhqsUrl6jmLQkgLSsalXjApDIY2S4Xr0Ta6tZOwB3TjJTxOoCp91sxq15GpIAYv6E+o8KSX9j6oK/IkBu8c21vsqARZyvb5GCc79g/bgZQ4=
-  - secure: W6reo9moCOSgewXooqlV6mZkI+XGna1/sFavHQKkI0bT5M+aND5OnYVuaAhQHwpNNtfKOvSFJ2dKQaFqVg9rUobwVuQx4iqOT0aP1QynUU7FJlQrLafGkCaQwQbyzBsXh7PR5ziJZqEJZYMV5PktD/qzmdzTpPHKZ+Kq+FBhaoo=
 language: node_js
