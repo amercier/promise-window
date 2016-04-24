@@ -323,9 +323,8 @@
   };
 
   /**
-   * Change the URI
-   *
-   * @param {[type]} uri [description]
+   * Changes the URI
+   * @param {String} uri The new URI
    * @throws {Error} If the window is open
    * @return {PromiseWindow} Returns this object to allow chaining
    */
