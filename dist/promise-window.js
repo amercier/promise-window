@@ -75,6 +75,11 @@
    *                                          interval this check is done. Defaults to 100ms.
    * @param {String}   config.windowName      Name to be ginven to the popup window. See `window.open` references for
    *                                          details. If `null`, a random name is generated.
+   * @param {Object}   config.window          Object containing window configuration settings. Scrollbars are enabled
+   *                                          by default. All `window.open` ptions are accepted, but please note that
+   *                                          many of them have no effect in most modern browsers. See
+   *                                          https://developer.mozilla.org/en-US/docs/Web/API/Window/open for more
+   *                                          details.
    * @constructor
    */
   function PromiseWindow(uri, config) {
@@ -135,6 +140,9 @@
   PromiseWindow.defaultConfig = {
     width: html.clientWidth,
     height: html.clientHeight,
+    window: {
+      scrollbars: true
+    },
     watcherDelay: 100,
     promiseProvider: null,
     onPostMessage: function onPostMessage(event) {
@@ -177,28 +185,76 @@
   prototype = PromiseWindow.prototype;
 
   /**
+   * Checks whether a value is a boolean
+   * @param {*} value The value to check
+   * @return {boolean} `true` if value is a boolean, `false` otherwise
+   * @protected
+   */
+  prototype._isBoolean = function _isBoolean(value) {
+    return value === true || value === false;
+  };
+
+  /**
+   * Converts a config value into a value compatible with `window.open`.
+   * If value is a boolean, convert it to 'yes' or 'no', otherwise simply
+   * casts it into a string.
+   * @param {*} value The value to convert
+   * @return {string} The converted value
+   * @protected
+   */
+  prototype._serializeFeatureValue = function _serializeFeatureValue(key, value) {
+    if (this._isBoolean(value)) {
+      return value ? 'yes' : 'no';
+    }
+    return '' + value;
+  };
+
+  /**
+   * Get the left and top position in the screen for a rectangle, taking
+   * dual-screen position into account
+   * @param {Number} width Width of the rectangle
+   * @param {Number} height Height of the rectangle
+   * @return {Object} position A new object representing the position of the rectangle, centered
+   * @return {Number} position.left The X coordinate of the centered rectangle
+   * @return {Number} position.top The Y coordinate of the centered rectangle
+   * @return {Number} position.width The width of the centered rectangle
+   * @return {Number} position.height The height of the centered rectangle
+   * @protected
+   */
+  prototype._getCenteredPosition = function _getCenteredPosition(width, height) {
+    var dualScreenLeft = root.screenLeft !== undefined ? root.screenLeft : screen.left,
+        dualScreenTop = root.screenTop !== undefined ? root.screenTop : screen.top,
+        w = root.innerWidth || html.clientWidth || screen.width,
+        h = root.innerHeight || html.clientHeight || screen.height;
+
+    return {
+      left: (w / 2) - (width / 2) + dualScreenLeft,
+      top:  (h / 2) - (height / 2) + dualScreenTop,
+      width: width,
+      height: height
+    };
+  };
+
+  /**
    * Generates window features based on the current configuration
    * @return {String} Returns window features compatible with `window.open`
    * @protected
    */
   prototype._getFeatures = function _getFeatures() {
-    var width = this.config.width,
-        height = this.config.height;
+    var config = this._getCenteredPosition(this.config.width, this.config.height);
+    for (var key in this.config.window) {
+      if (this.config.window.hasOwnProperty(key)) {
+        config[key] = this.config.window[key];
+      }
+    }
 
-    // Center popup, taking dual-screen position into account
-    var dualScreenLeft = root.screenLeft !== undefined ? root.screenLeft : screen.left,
-        dualScreenTop = root.screenTop !== undefined ? root.screenTop : screen.top,
-        w = root.innerWidth || html.clientWidth || screen.width,
-        h = root.innerHeight || html.clientHeight || screen.height,
-        left = (w / 2) - (width / 2) + dualScreenLeft,
-        top =  (h / 2) - (height / 2) + dualScreenTop;
-
-    return "scrollbars=yes, width=" + width + ", height=" + height +
-      ", top=" + top + ", left=" + left;
+    return Object.keys(config)
+      .map(function(key) { return key + '=' + this._serializeFeatureValue(key, config[key]); }.bind(this))
+      .join(',');
   };
 
   /**
-   * Create a new Promise, using `config.promiseProvider`, and save reject and
+   * Creates a new Promise, using `config.promiseProvider`, and save reject and
    * resolve methods for later.
    *
    * @return {Promise} Returns the new Promise object created by the configured
@@ -282,7 +338,7 @@
   };
 
   /**
-   * Open a new popup window.
+   * Opens a new popup window.
    *
    * @return {Promise} Returns a new `Promise` object. This promise will be:
    *                   - rejected with `"blocked"` message if the popup window
@@ -317,7 +373,7 @@
   };
 
   /**
-   * Close the popup window.
+   * Closes the popup window.
    *
    * @return {void}
    */
@@ -337,7 +393,7 @@
   };
 
   /**
-   * Check whether the window is open or not
+   * Checks whether the window is open or not
    * @return {Boolean} Returns `true` if the window is opened, `false` otherwise.
    */
   prototype.isOpen = function isOpen() {

@@ -12,7 +12,13 @@
       // Open the window
       // ---------------
 
-      PromiseWindow.open('popup.html', { width: 350, height: 450 }).then(
+      PromiseWindow.open('popup.html', {
+        width: +this.elements.width.value,
+        height: +this.elements.height.value,
+        window: {
+          scrollbars: this.elements.scrollbars.checked
+        }
+      }).then(
         // Success
         function(data) {
           $alert.
