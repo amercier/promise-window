@@ -3,3 +3,4 @@ docs/api
 docs/bower_components
 node_modules
 tests/coverage
+*.pem
