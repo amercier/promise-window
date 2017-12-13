@@ -69,7 +69,7 @@ PromiseWindow.open('http://popup.html').then(
  */
 
 // report succees
-opener.postMessage({ result: 'yeah' }, location.origin); // (1)
+opener.postMessage({ result: 'awesome' }, location.origin); // (1)
 
 // report error
 opener.postMessage({ error: 'my-custom-message' }, location.origin); // (2)
