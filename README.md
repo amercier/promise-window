@@ -43,7 +43,7 @@ convenience method:
  * index.html
  */
 PromiseWindow.open('http://popup.html').then(
-  
+
   // Success
   function(data) {
     // data.result == 'awesome' (1)
@@ -78,7 +78,7 @@ opener.postMessage({ error: 'my-custom-message' }, location.origin); // (2)
 
 ### Advanced usage ###
 
-Instanciating the `PromiseWindow` prototype gives you more control. The
+Instantiating the `PromiseWindow` prototype gives you more control. The
 following example shows how to close the window after 30 seconds.
 
 ```javascript

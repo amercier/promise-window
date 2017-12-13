@@ -4,7 +4,13 @@
   $(document).ready(function() {
 
     var $alert = $('.alert'),
-        $button = $('input[type="submit"]');
+        $button = $('input[type="submit"]'),
+        $url = $('input[name="url"]');
+
+    // Send origin to sender so it can use it as `targetOrigin` in its
+    // `postMessage` call.
+    // See https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage
+    $url.val($url.val() + '?origin=' + encodeURI(window.origin));
 
     $('form[name="demo"]').submit(function(event) {
       event.preventDefault();
@@ -12,7 +18,7 @@
       // Open the window
       // ---------------
 
-      PromiseWindow.open('popup.html', {
+      PromiseWindow.open(this.elements.url.value, {
         width: +this.elements.width.value,
         height: +this.elements.height.value,
         window: {
