@@ -80,6 +80,10 @@
    *                                          many of them have no effect in most modern browsers. See
    *                                          https://developer.mozilla.org/en-US/docs/Web/API/Window/open for more
    *                                          details.
+   * @param {Function} config.onClose         Function being called whenever the popup is being closed (either after a
+   *                                          post message has been received, or window has been closed by user, or
+   *                                          `.close()` method has been called. Default implementation closes the
+   *                                          popup window by calling `this._window.close()`).
    * @constructor
    */
   function PromiseWindow(uri, config) {
@@ -153,7 +157,10 @@
       }
       this.close();
     },
-    windowName: null
+    windowName: null,
+    onClose: function() {
+      this._window.close();
+    }
   };
 
   // Configure default Promise provider from current invironment
@@ -383,8 +390,7 @@
     this._stopWatcher();
     root.removeEventListener("message", this._onPostMessage);
     if (this._isWindowAlive()) {
-      this._window.onclose = null;
-      this._window.close();
+      this.config.onClose.call(this);
     }
     this._reject("closed");
     this._window = null;
