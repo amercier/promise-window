@@ -84,6 +84,8 @@
    *                                          post message has been received, or window has been closed by user, or
    *                                          `.close()` method has been called. Default implementation closes the
    *                                          popup window by calling `this._window.close()`).
+   * @param {RegExp} config.originRegexp      Regular expression that matches the origin part of an URI. Defaults to
+   *                                          `new RegExp('^[^:]+://[^/]*')`
    * @constructor
    */
   function PromiseWindow(uri, config) {
@@ -160,7 +162,8 @@
     windowName: null,
     onClose: function() {
       this._window.close();
-    }
+    },
+    originRegexp: new RegExp('^[^:]+://[^/]*')
   };
 
   // Configure default Promise provider from current invironment
@@ -324,7 +327,8 @@
    * @protected
    */
   prototype._onPostMessage = function _onPostMessage(event) {
-    if (this._window === event.source) {
+    var expectedOrigin = this.config.originRegexp.exec(this.uri)[0];
+    if (this._window === event.source && event.origin === expectedOrigin) {
       this.config.onPostMessage.call(this, event);
     }
   };
@@ -361,6 +365,10 @@
     if (this.isOpen()) {
       throw new Error('Window is already open');
     }
+    if (!this.config.originRegexp.test(this.uri)) {
+      throw new Error('Invalid URI: "' + this.uri + '" doesn\'t match regular expression ' + this.config.originRegexp);
+    }
+
     this._windowOpen = true;
     var promise = this._createPromise();
     this._window = root.open(
