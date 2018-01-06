@@ -1,0 +1,32 @@
+bower_components/*
+
+# bind-polyfill
+!bower_components/bind-polyfill
+bower_components/bind-polyfill/*
+!bower_components/bind-polyfill/index.js
+
+# bootstrap
+!bower_components/bootstrap
+bower_components/bootstrap/*
+!bower_components/bootstrap/dist
+bower_components/bootstrap/dist/*
+!bower_components/bootstrap/dist/css
+!bower_components/bootstrap/dist/js
+bower_components/bootstrap/dist/css/*
+bower_components/bootstrap/dist/js/*
+!bower_components/bootstrap/dist/css/bootstrap.min.css
+!bower_components/bootstrap/dist/js/bootstrap.min.js
+
+# jquery
+!bower_components/jquery
+bower_components/jquery/*
+!bower_components/jquery/dist
+bower_components/jquery/dist/*
+!bower_components/jquery/dist/jquery.js
+
+# promise-window
+!bower_components/promise-window
+bower_components/promise-window/*
+!bower_components/promise-window/dist
+bower_components/promise-window/dist/*
+!bower_components/promise-window/dist/promise-window.js

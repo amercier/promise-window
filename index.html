@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <title>PromiseWindow Demo</title>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+  <style>
+body {
+  padding-top: 80px;
+}
+
+.jumbotron {
+  text-align: center;
+  background-color: transparent;
+}
+
+.options {
+  font-size: 0.85em;
+  margin: 2em 0;
+  opacity: 0.8;
+}
+
+.options > * {
+  margin: 0 0.5em;
+}
+
+.options .input-sm {
+  width: 4em;
+  font-size: inherit;
+  height: 2em;
+}
+
+.options .input-md {
+  width: 20em;
+  font-size: inherit;
+  height: 2em;
+}
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">PromiseWindow</a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Demo</a></li>
+          <li><a href="./api/#!/api/PromiseWindow">API Documentation</a></li>
+          <li><a href="https://github.com/amercier/promise-window" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <div class="jumbotron">
+      <h1>PromiseWindow</h1>
+      <p class="lead">
+        Click on the button below to open a new popup window.<br>
+        The state of the popup window is handled easily with a Promise object.
+      </p>
+      <form name="demo" class="form-inline" role="form">
+        <input class="btn btn-lg btn-success" type="submit" value="Open new window" disabled />
+
+        <div class="options">
+          <div class="form-group">
+            <label for="width">width:</label>
+            <input class="form-control input-sm" type="text" name="width" value="350">
+          </div>
+          <div class="form-group">
+            <label for="height">height:</label>
+            <input class="form-control input-sm" type="text" name="height" value="450">
+          </div>
+          <div class="checkbox"><label><input type="checkbox" name="scrollbars" checked> scrollbars</label></div>
+          <div class="form-group">
+            <label for="url">url:</label>
+            <input class="form-control input-md" type="text" name="url" value="popup.html">
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="alert" role="alert"><!-- Success/error message will go here --></div>
+
+  </div>
+
+  <script src="bower_components/bind-polyfill/index.js"></script>
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="bower_components/promise-window/dist/promise-window.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>

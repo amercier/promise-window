@@ -1,0 +1,9 @@
+{
+  "name": "promise-window-demo",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "~3.3.2",
+    "bind-polyfill": "~1.0.0",
+    "promise-window": "../"
+  }
+}

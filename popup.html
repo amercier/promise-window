@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>PromiseWindow Demo - Popup</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    <style>
+.btn {
+  min-width: 7em;
+}
+
+.jumbotron {
+  text-align: center;
+  background-color: transparent;
+}
+
+.form-actions {
+  margin: 4em 0 0 0;
+  text-align: right;
+}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+
+      <div class="jumbotron">
+        <h1>Popup example</h1>
+        <p class="lead">
+          Now, try to either click OK or Cancel buttons, close or even kill
+          the popup!
+        </p>
+      </div>
+
+      <form name="popup">
+        <div class="form-group">
+          <label for="message">Message:</label>
+          <input id="message" name="message" class="form-control" type="text" value="Hello, world!" required disabled />
+        </div>
+        <div class="form-actions">
+          <input class="btn btn-primary" type="submit" value="Send" disabled />
+          <button class="btn btn-default" name="cancel" disabled>Cancel</button>
+        </div>
+      </form>
+
+    </div>
+
+    <script src="bower_components/bind-polyfill/index.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/promise-window/dist/promise-window.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
