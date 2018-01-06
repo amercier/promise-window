@@ -85,7 +85,8 @@
    *                                          `.close()` method has been called. Default implementation closes the
    *                                          popup window by calling `this._window.close()`).
    * @param {RegExp} config.originRegexp      Regular expression that matches the origin part of an URI. Defaults to
-   *                                          `new RegExp('^[^:]+://[^/]*')`
+   *                                          `new RegExp('^[^:/?]+://[^/]*')`. If doesn't match (ex: relative URIs),
+   *                                          use `location.origin`.
    * @constructor
    */
   function PromiseWindow(uri, config) {
@@ -163,7 +164,7 @@
     onClose: function() {
       this._window.close();
     },
-    originRegexp: new RegExp('^[^:]+://[^/]*')
+    originRegexp: new RegExp('^[^:/?]+://[^/]*')
   };
 
   // Configure default Promise provider from current invironment
@@ -327,7 +328,8 @@
    * @protected
    */
   prototype._onPostMessage = function _onPostMessage(event) {
-    var expectedOrigin = this.config.originRegexp.exec(this.uri)[0];
+    var expectedOriginMatches = this.config.originRegexp.exec(this.uri);
+    var expectedOrigin = expectedOriginMatches && expectedOriginMatches[0] || location.origin;
     if (this._window === event.source && event.origin === expectedOrigin) {
       this.config.onPostMessage.call(this, event);
     }
@@ -364,9 +366,6 @@
   prototype.open = function open() {
     if (this.isOpen()) {
       throw new Error('Window is already open');
-    }
-    if (!this.config.originRegexp.test(this.uri)) {
-      throw new Error('Invalid URI: "' + this.uri + '" doesn\'t match regular expression ' + this.config.originRegexp);
     }
 
     this._windowOpen = true;
