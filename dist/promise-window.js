@@ -338,12 +338,11 @@
   /**
    * Changes the URI
    * @param {String} uri The new URI
-   * @throws {Error} If the window is open
    * @return {PromiseWindow} Returns this object to allow chaining
    */
   prototype.setURI = function setURI(uri) {
     if (this.isOpen()) {
-      throw new Error('Cannot change the URI while the window is open');
+      this._window.location.href = uri;
     }
     this.uri = uri;
     return this;
